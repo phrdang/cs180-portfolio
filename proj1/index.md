@@ -28,23 +28,23 @@ Below are the results for the large `.tif` images:
 
 <table>
     <tr>
-        <td><img src="assets/church.jpg" height=300px></td>
-        <td><img src="assets/emir.jpg" height=300px></td>
-        <td><img src="assets/harvesters.jpg" height=300px></td>
+        <td><img src="assets/church.jpg" height="50%"></td>
+        <td><img src="assets/emir.jpg" height="50%"></td>
+        <td><img src="assets/harvesters.jpg" height="50%"></td>
     </tr>
     <tr>
-        <td><img src="assets/icon.jpg" height=300px></td>
-        <td><img src="assets/lady.jpg" height=300px></td>
-        <td><img src="assets/melons.jpg" height=300px></td>
+        <td><img src="assets/icon.jpg" height="50%"></td>
+        <td><img src="assets/lady.jpg" height="50%"></td>
+        <td><img src="assets/melons.jpg" height="50%"></td>
     </tr>
     <tr>
-        <td><img src="assets/onion_church.jpg" height=300px></td>
-        <td><img src="assets/sculpture.jpg" height=300px></td>
-        <td><img src="assets/self_portrait.jpg" height=300px></td>
+        <td><img src="assets/onion_church.jpg" height="50%"></td>
+        <td><img src="assets/sculpture.jpg" height="50%"></td>
+        <td><img src="assets/self_portrait.jpg" height="50%"></td>
     </tr>
     <tr>
-        <td><img src="assets/three_generations.jpg" height=300px></td>
-        <td><img src="assets/train.jpg" height=300px></td>
+        <td><img src="assets/three_generations.jpg" height="50%"></td>
+        <td><img src="assets/train.jpg" height="50%"></td>
         <td></td>
     </tr>
 </table>
