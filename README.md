@@ -1,2 +1,5 @@
 # cs180-portfolio
-Portfolio of projects from CS 180: Intro to Computer Vision and Computational Photography at UC Berkeley
+
+Rebecca Dang's portfolio of projects from [CS 180: Intro to Computer Vision and Computational Photography](https://inst.eecs.berkeley.edu/~cs180/fa24/) at UC Berkeley
+
+- [Project 1](/proj1/index.md)
