@@ -31,6 +31,14 @@ Below are the results for the 3 small `.jpg` images (`cathedral`, `monastery`, a
 ![Colorized monastery](assets/monastery.jpg)
 ![Colorized Tobolsk](assets/tobolsk.jpg)
 
+Here were the calculated displacements (I aligned all 3 images to the blue (B) channel):
+
+| Image Name | G Displacement | R Displacement |
+| :--- | :--- | :--- |
+| cathedral.jpg | (2, 5) | (3, 12) |
+| monastery.jpg | (2, -3) | (2, 3) |
+| tobolsk.jpg | (3, 3) | (3, 6) |
+
 ## Multi-Scale Alignment (Image Pyramid)
 
 For images with larger dimensions, it would take too long to do an exhaustive search on the original image. To solve this problem, I used an [image pyramid](https://en.wikipedia.org/wiki/Pyramid_(image_processing)). Specifically this was the algorithm I used:
@@ -46,27 +54,27 @@ For images with larger dimensions, it would take too long to do an exhaustive se
 4. Use the final optimal displacement to translate the original image
 5. `np.dstack` the aligned RGB channels to form the final colorized image the same way as single scale alignment
 
-Below are the results for the large `.tif` images:
+Below are the results for the large `.tif` images and their displacements. Notably, the `emir.tif` is not very well aligned compared to the others.
 
 <table>
     <tr>
-        <td><img src="assets/church.jpg" height="50%"></td>
-        <td><img src="assets/emir.jpg" height="50%"></td>
-        <td><img src="assets/harvesters.jpg" height="50%"></td>
+        <td><img src="assets/church.jpg" height="50%">church.tif G: (0, 16), R: (-8, 52)</td>
+        <td><img src="assets/emir.jpg" height="50%">emir.tif G: (22, 44), R: (-240, 96)</td>
+        <td><img src="assets/harvesters.jpg" height="50%">harvesters.tif G: (16, 54), R: (14, 122)</td>
     </tr>
     <tr>
-        <td><img src="assets/icon.jpg" height="50%"></td>
-        <td><img src="assets/lady.jpg" height="50%"></td>
-        <td><img src="assets/melons.jpg" height="50%"></td>
+        <td><img src="assets/icon.jpg" height="50%">icon.tif G: (16, 38), R: (20, 86)</td>
+        <td><img src="assets/lady.jpg" height="50%">lady.tif G: (8, 42), R: (8, 104)</td>
+        <td><img src="assets/melons.jpg" height="50%">melons.tif G: (8, 82), R: (12, 180)</td>
     </tr>
     <tr>
-        <td><img src="assets/onion_church.jpg" height="50%"></td>
-        <td><img src="assets/sculpture.jpg" height="50%"></td>
-        <td><img src="assets/self_portrait.jpg" height="50%"></td>
+        <td><img src="assets/onion_church.jpg" height="50%">onion_church.tif G: (26, 44), R: (36, 102)</td>
+        <td><img src="assets/sculpture.jpg" height="50%">sculpture.tif G: (-10, 32), R: (-26, 140)</td>
+        <td><img src="assets/self_portrait.jpg" height="50%">self_portrait.tif G: (26, 74), R: (36, 176)</td>
     </tr>
     <tr>
-        <td><img src="assets/three_generations.jpg" height="50%"></td>
-        <td><img src="assets/train.jpg" height="50%"></td>
+        <td><img src="assets/three_generations.jpg" height="50%">three_generations.tif G: (14, 52), R: (12, 114)</td>
+        <td><img src="assets/train.jpg" height="50%">train.tif G: (0, 44), R: (24, 92)</td>
         <td></td>
     </tr>
 </table>
