@@ -79,6 +79,8 @@ Below are the results for the large `.tif` images and their displacements. Notab
     </tr>
 </table>
 
+
+
 ## Bells and Whistles (Extra Credit)
 
 ### Automatic contrasting (Histogram equalization)
@@ -119,6 +121,8 @@ As you can see from the results below, the regular histogram equalization usuall
         <td><img src="assets/adapt_hist_self_portrait.jpg" height="50%"></td>
     </tr>
 </table>
+
+
 
 ### Automatic color balancing (aka white balancing)
 
@@ -164,9 +168,11 @@ The second color balancing method I used was **gray world**, where you rescale t
     </tr>
 </table>
 
+
+
 ### Better Features
 
-Noticeably, the `emir.tif` image did not get aligned properly using an image similarity metric of SSD. Switching the metric to maximizing **structural similarity** fixed the alignment.
+Noticeably, the `emir.tif` image did not get aligned properly using an image similarity metric of SSD. Switching the metric to maximizing **structural similarity** fixed the alignment. The best displacement was G: (24, 48), R: (46, 102).
 
 <table>
     <tr>
@@ -178,6 +184,8 @@ Noticeably, the `emir.tif` image did not get aligned properly using an image sim
         <td><img src="assets/emir_structural_similarity.jpg" height="50%"></td>
     </tr>
 </table>
+
+
 
 ## References
 
