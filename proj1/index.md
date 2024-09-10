@@ -81,7 +81,103 @@ Below are the results for the large `.tif` images and their displacements. Notab
 
 ## Bells and Whistles (Extra Credit)
 
-In construction!
+### Automatic contrasting (Histogram equalization)
+
+Used [Histogram Equalization](https://en.wikipedia.org/wiki/Histogram_equalization) to perform automatic contrasting. This equalizes the distribution of pixel colors in the image.
+
+Specifically, I used:
+
+- [`skimage.exposure.equalize_hist`](https://scikit-image.org/docs/stable/api/skimage.exposure.html#skimage.exposure.equalize_hist)
+- [`skimage.exposure.equalize_adapthist`](https://scikit-image.org/docs/stable/api/skimage.exposure.html#skimage.exposure.equalize_adapthist)
+
+As you can see from the results below, the regular histogram equalization usually yielded a "brighter contrast" while the adaptive histogram equalization yielded a "darker contrast".
+
+<table>
+    <tr>
+        <th>Before</th>
+        <th>After Histogram Equalization</th>
+        <th>After Contrast Limited Adaptive Histogram Equalization (CLAHE)</th>
+    <tr>
+    <tr>
+        <td><img src="assets/church.jpg" height="50%"></td>
+        <td><img src="assets/hist_equal_church.jpg" height="50%"></td>
+        <td><img src="assets/adapt_hist_church.jpg" height="50%"></td>
+    </tr>
+    <tr>
+        <td><img src="assets/icon.jpg" height="50%"></td>
+        <td><img src="assets/hist_equal_icon.jpg" height="50%"></td>
+        <td><img src="assets/adapt_hist_icon.jpg" height="50%"></td>
+    </tr>
+    <tr>
+        <td><img src="assets/sculpture.jpg" height="50%"></td>
+        <td><img src="assets/hist_equal_sculpture.jpg" height="50%"></td>
+        <td><img src="assets/adapt_hist_sculpture.jpg" height="50%"></td>
+    </tr>
+    <tr>
+        <td><img src="assets/self_portrait.jpg" height="50%"></td>
+        <td><img src="assets/hist_equal_self_portrait.jpg" height="50%"></td>
+        <td><img src="assets/adapt_hist_self_portrait.jpg" height="50%"></td>
+    </tr>
+</table>
+
+### Automatic color balancing (aka white balancing)
+
+The first color balancing method I used was **white patch**, where you assume that the brightest pixel (or the pixel in the Xth percentile of brightness) is white and rescale everything accordingly.
+
+<table>
+    <tr>
+        <th>Before</th>
+        <th>After</th>
+    <tr>
+    <tr>
+        <td><img src="assets/lady.jpg" height="50%"></td>
+        <td><img src="assets/white_patch_lady.jpg" height="50%"></td>
+    </tr>
+    <tr>
+        <td><img src="assets/onion_church.jpg" height="50%"></td>
+        <td><img src="assets/white_patch_onion_church.jpg" height="50%"></td>
+    </tr>
+    <tr>
+        <td><img src="assets/self_portrait.jpg" height="50%"></td>
+        <td><img src="assets/white_patch_self_portrait.jpg" height="50%"></td>
+    </tr>
+</table>
+
+The second color balancing method I used was **gray world**, where you rescale the pixel values under the assumption that the average pixel value is gray. This resulted in a blueish tinge to images.
+
+<table>
+    <tr>
+        <th>Before</th>
+        <th>After</th>
+    <tr>
+    <tr>
+        <td><img src="assets/harvesters.jpg" height="50%"></td>
+        <td><img src="assets/gray_world_harvesters.jpg" height="50%"></td>
+    </tr>
+    <tr>
+        <td><img src="assets/melons.jpg" height="50%"></td>
+        <td><img src="assets/gray_world_melons.jpg" height="50%"></td>
+    </tr>
+    <tr>
+        <td><img src="assets/train.jpg" height="50%"></td>
+        <td><img src="assets/gray_world_train.jpg" height="50%"></td>
+    </tr>
+</table>
+
+### Better Features
+
+Noticeably, the `emir.tif` image did not get aligned properly using an image similarity metric of SSD. Switching the metric to maximizing **structural similarity** fixed the alignment.
+
+<table>
+    <tr>
+        <th>Before</th>
+        <th>After</th>
+    <tr>
+    <tr>
+        <td><img src="assets/emir.jpg" height="50%"></td>
+        <td><img src="assets/emir_structural_similarity.jpg" height="50%"></td>
+    </tr>
+</table>
 
 ## References
 
