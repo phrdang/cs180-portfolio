@@ -185,3 +185,4 @@ Noticeably, the `emir.tif` image did not get aligned properly using an image sim
 - [Jeffrey Tan's Project 1](https://inst.eecs.berkeley.edu/~cs180/fa23/upload/files/proj1/tanjeffreyz02/)
 - [Bryan Li's Project 1](https://inst.eecs.berkeley.edu/~cs180/fa23/upload/files/proj1/bryanli0/)
 - [Minseok Son's Project 1](https://inst.eecs.berkeley.edu/~cs180/fa23/upload/files/proj1/tom5079/)
+- [Introduction to Image Processing with Python by Erika Lacson](https://python.plainenglish.io/introduction-to-image-processing-with-python-bb39c83366a4)
