@@ -92,7 +92,7 @@ Specifically, I used:
 
 As you can see from the results below, the regular histogram equalization usually yielded a "brighter contrast" while the adaptive histogram equalization yielded a "darker contrast".
 
-<!-- <table>
+<table>
     <tr>
         <th>Before</th>
         <th>After Histogram Equalization</th>
@@ -118,7 +118,7 @@ As you can see from the results below, the regular histogram equalization usuall
         <td><img src="assets/hist_equal_self_portrait.jpg" height="50%"></td>
         <td><img src="assets/adapt_hist_self_portrait.jpg" height="50%"></td>
     </tr>
-</table> -->
+</table>
 
 ### Automatic color balancing (aka white balancing)
 
