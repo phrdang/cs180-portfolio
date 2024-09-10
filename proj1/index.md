@@ -124,7 +124,7 @@ As you can see from the results below, the regular histogram equalization usuall
 
 The first color balancing method I used was **white patch**, where you assume that the brightest pixel (or the pixel in the Xth percentile of brightness) is white and rescale everything accordingly.
 
-<!-- <table>
+<table>
     <tr>
         <th>Before</th>
         <th>After</th>
@@ -141,11 +141,11 @@ The first color balancing method I used was **white patch**, where you assume th
         <td><img src="assets/self_portrait.jpg" height="50%"></td>
         <td><img src="assets/white_patch_self_portrait.jpg" height="50%"></td>
     </tr>
-</table> -->
+</table>
 
 The second color balancing method I used was **gray world**, where you rescale the pixel values under the assumption that the average pixel value is gray. This resulted in a blueish tinge to images.
 
-<!-- <table>
+<table>
     <tr>
         <th>Before</th>
         <th>After</th>
@@ -162,13 +162,13 @@ The second color balancing method I used was **gray world**, where you rescale t
         <td><img src="assets/train.jpg" height="50%"></td>
         <td><img src="assets/gray_world_train.jpg" height="50%"></td>
     </tr>
-</table> -->
+</table>
 
 ### Better Features
 
 Noticeably, the `emir.tif` image did not get aligned properly using an image similarity metric of SSD. Switching the metric to maximizing **structural similarity** fixed the alignment. The best displacement was G: (24, 48), R: (46, 102).
 
-<!-- <table>
+<table>
     <tr>
         <th>Before</th>
         <th>After</th>
@@ -177,7 +177,7 @@ Noticeably, the `emir.tif` image did not get aligned properly using an image sim
         <td><img src="assets/emir.jpg" height="50%"></td>
         <td><img src="assets/emir_structural_similarity.jpg" height="50%"></td>
     </tr>
-</table> -->
+</table>
 
 ## References
 
