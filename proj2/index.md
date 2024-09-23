@@ -6,7 +6,7 @@ Fun with Filters and Frequencies
 
 ## Part 1: Fun with filters
 
-### Part 1.1
+### Part 1.1: Finite Difference Operator
 
 By convolving the original image with [finite difference](https://en.wikipedia.org/wiki/Finite_difference) operators,
 I can obtain the gradient/magnitude image, which shows the edges of the image. To greater accentuate the edges,
@@ -72,12 +72,45 @@ We can also demonstrate the commutativity of convolving and applying the Gaussia
     </tr>
 </table>
 
-## Part 2
+## Part 2: Fun with Frequencies
 
-### Part 2.1
+### Part 2.1: Image "Sharpening"
 
-### Part 2.2
+To "sharpen" an image, you can take the original image and subtract the Gaussian blurred image to get the high frequencies of the image. Then, you can add the high frequencies to the original image. With some mathematical manipulation, you can perform the sharpening in one convolution.
 
-### Part 2.3
+<table>
+    <tr>
+        <td>Original</td>
+        <td>Sharpened</td>
+    </tr>
+    <tr>
+        <td><img src="assets/part2/1/taj.jpg"></td>
+        <td><img src="assets/part2/1/taj_sharpened.jpg"></td>
+    </tr>
+    <tr>
+        <td><img src="assets/part2/1/landscape.jpg"></td>
+        <td><img src="assets/part2/1/landscape_sharpened.jpg"></td>
+    </tr>
+</table>
 
-### Part 2.4
+I also took an image, Gaussian blurred it, and then sharpened it. As you can see, the sharpening does not exactly undo the blur -- there is some information loss caused by the blur that isn't recovered by sharpening.
+
+<table>
+    <tr>
+        <td>Original</td>
+        <td>Blurred</td>
+        <td>Sharpened</td>
+    </tr>
+    <tr>
+        <td><img src="assets/part2/1/canoe.jpg"></td>
+        <td><img src="assets/part2/1/canoe_blurred.jpg"></td>
+        <td><img src="assets/part2/1/canoe_sharpened.jpg"></td>
+    </tr>
+</table>
+
+### Part 2.2: Hybrid Images
+
+### Part 2.3: Gaussian and Laplacian Stacks
+
+### Part 2.4: Multiresolution Blending
+
