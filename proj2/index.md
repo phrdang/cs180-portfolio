@@ -181,7 +181,7 @@ To construct the final orapple blended image, all you need to do is take the 2 L
 
 $$l_k = l_k^A * g_k^m + l_k^B * (1 - g_k^m)$$
 
-where $l$ is the final blended image, $l^A$ is the Laplacian stack for the first image, $l^B$ is the Laplacian stack for the first image, $g^m$ is the Gaussian stack for the mask, and the $k$ subscript denotes the level. The final single image is formed by doing:
+where $$l$$ is the final blended image, $$l^A$$ is the Laplacian stack for the first image, $$l^B$$ is the Laplacian stack for the first image, $$g^m$$ is the Gaussian stack for the mask, and the $$k$$ subscript denotes the level. The final single image is formed by doing:
 
 $$\Sigma_{0}^k{l_k}$$
 
