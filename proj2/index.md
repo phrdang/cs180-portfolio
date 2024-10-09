@@ -9,6 +9,9 @@ Fun with Filters and Frequencies
 
 [Original project spec](https://inst.eecs.berkeley.edu/~cs180/fa24/hw/proj2/index.html)
 
+1. Table of Contents
+{:toc}
+
 ## Part 1: Fun with filters
 
 ### Part 1.1: Finite Difference Operator

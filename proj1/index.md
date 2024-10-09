@@ -2,6 +2,9 @@
 
 Images of the Russian Empire: Colorizing the [Prokudin-Gorskii photo collection](https://www.loc.gov/collections/prokudin-gorskii/)
 
+1. Table of Contents
+{:toc}
+
 ## Introduction
 
 The Prokudin-Gorskii photo collection is a collection of photos taken by [Sergey Prokudin-Gorskii](https://en.wikipedia.org/wiki/Sergey_Prokudin-Gorsky) before there was color photography. He took identical photos using red, green, and blue filters and imagined that in the future, there would be a method to combine all 3 channels into a single, color photo.
@@ -92,7 +95,7 @@ Specifically, I used:
 
 As you can see from the results below, the regular histogram equalization usually yielded a "brighter contrast" while the adaptive histogram equalization yielded a "darker contrast".
 
-<table>
+<table markdown="0">
     <tr>
         <th>Before</th>
         <th>After Histogram Equalization</th>
