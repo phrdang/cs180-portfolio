@@ -12,7 +12,7 @@ Face Morphing - [Project Spec](https://inst.eecs.berkeley.edu/~cs180/fa24/hw/pro
 
 ## Part 1: Defining Correspondences
 
-Before any morphing can occur, I had to define corresponding points across the 2 images I wanted to morph. To do this, my friend Elana and I took pictures of each other in the same room with the same expression. I then resized the images so they were the same dimensions, and uploaded them to this [tool](Used https://cal-cs180.github.io/fa23/hw/proj3/tool.html) and manually indicated corresponding points. The points were then exported to a JSON file which was read into my Jupyter notebook I used to code this project.
+Before any morphing can occur, I had to define corresponding points across the 2 images I wanted to morph. To do this, my friend Elana and I took pictures of each other in the same room with the same expression. I then resized the images so they were the same dimensions, and uploaded them to this [tool](https://cal-cs180.github.io/fa23/hw/proj3/tool.html) and manually indicated corresponding points. The points were then exported to a JSON file which was read into my Jupyter notebook I used to code this project.
 
 Next, I computed the midpoint of each corespondence point and performed [Delaunay triangulation](https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.Delaunay.html) on the those midpoints. This was done to ensure the triangulation matched both images.
 
@@ -137,3 +137,11 @@ To celebrate the upcoming release of [Arcane](https://en.wikipedia.org/wiki/Arca
 </div>
 
 Here is a [link](https://youtu.be/WDh9NF7ZHIg) to the video if the embed above doesn't work. I also cross-posted to the [r/arcane subreddit](https://www.reddit.com/r/arcane/comments/1fz55kj/s2_spoilers_character_posters_morphed_together/)!
+
+### Changing my gender
+
+I downloaded the [average Asian male face](https://www.pinterest.com/pin/world-of-facial-averages-eastsoutheast-asia-pacific-islander-composites-of-males-and-females-to-produce-an-average-fac--563583340839193539/), resized it to match the dimensions of my image, and "changed my gender" by morphing halfway between myself and the average Asian male face (e.g. `warp_frac = 0.5` and `dissolve_frac = 0.5`).
+
+| Rebecca | Male Rebecca | Average Asian Male |
+| --- | --- | --- |
+| ![Rebecca original image](assets/2/rebecca.png) | ![Male Rebecca](assets/bw/male_rebecca.jpg) | ![Average Asian Male](assets/bw/avg_male_resized.jpg) |
