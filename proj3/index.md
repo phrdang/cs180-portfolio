@@ -120,7 +120,11 @@ Then, I stacked the warped faces together and took the average of the colors to 
 
 ## Part 5: Caricatures: Extrapolating From the Mean
 
+Next I extrapolated from the Dane population mean to create caricatures of myself. Extrapolation works as follows: `caricature = scale * (me - avg) + avg` where `scale > 1.0`. This is equivalent to `caricature = scale * me + (1 - scale) * avg`, which is the same morphing process done in Part 3, where `warp_frac` is outside the normal range of `[0.0, 1.0]` and `dissolve_frac = 0.0` since we are only changing the geometry of my face.
 
+| `warp_frac = -0.5` | `warp_frac = 1.5` |
+| --- | --- |
+| ![Caricature 1](assets/5/caricature1.jpg) | ![Caricature 2](assets/5/caricature2.jpg) |
 
 ## Bells and Whistles
 
