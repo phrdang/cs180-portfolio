@@ -2,16 +2,22 @@
 
 Images of the Russian Empire: Colorizing the [Prokudin-Gorskii photo collection](https://www.loc.gov/collections/prokudin-gorskii/)
 
+[Project Spec](https://inst.eecs.berkeley.edu/~cs180/fa24/hw/proj1/)
+
 1. Table of Contents
 {:toc}
 
 ## Introduction
 
-The Prokudin-Gorskii photo collection is a collection of photos taken by [Sergey Prokudin-Gorskii](https://en.wikipedia.org/wiki/Sergey_Prokudin-Gorsky) before there was color photography. He took identical photos using red, green, and blue filters and imagined that in the future, there would be a method to combine all 3 channels into a single, color photo.
+The Prokudin-Gorskii photo collection is a collection of photos taken by [Sergey Prokudin-Gorskii](https://en.wikipedia.org/wiki/Sergey_Prokudin-Gorsky) before there was color photography. He took identical photos using red, green, and blue filters and imagined that in the future, there would be a method to combine all 3 channels into a single, color photo. Below is an example of the `cathedral.jpg` red, green, and blue frames:
+
+<div style="text-align: center">
+    <img alt="cathedral red, green, and blue frames" src="assets/cathedral_rgb.jpg" height="600" />
+</div>
 
 In this project, I was tasked with combining each RGB channel into a color photo using computational methods (primarily using  the `numpy` and `skimage` libraries). The main challenge in combining the images is aligning them on top of each other.
 
-[Full project spec from Fall 2024](https://inst.eecs.berkeley.edu/~cs180/fa24/hw/proj1/)
+The Library of Congress also performed the same task, you can see their results [here](https://www.loc.gov/exhibits/empire/making.html).
 
 ## Single Scale Alignment
 
@@ -30,9 +36,7 @@ Before aligning the images, I also cropped all image channels so that only the i
 
 Below are the results for the 3 small `.jpg` images (`cathedral`, `monastery`, and `tobolsk`):
 
-![Colorized cathedral](assets/cathedral.jpg)
-![Colorized monastery](assets/monastery.jpg)
-![Colorized Tobolsk](assets/tobolsk.jpg)
+| ![Colorized cathedral](assets/cathedral.jpg) | ![Colorized monastery](assets/monastery.jpg) | ![Colorized Tobolsk](assets/tobolsk.jpg) |
 
 Here were the calculated displacements (I aligned all 3 images to the blue (B) channel):
 
@@ -59,28 +63,14 @@ For images with larger dimensions, it would take too long to do an exhaustive se
 
 Below are the results for the large `.tif` images and their displacements. Notably, the `emir.tif` is not very well aligned compared to the others.
 
-<table>
-    <tr>
-        <td><img src="assets/church.jpg" height="50%">church.tif G: (0, 16), R: (-8, 52)</td>
-        <td><img src="assets/emir.jpg" height="50%">emir.tif G: (22, 44), R: (-240, 96)</td>
-        <td><img src="assets/harvesters.jpg" height="50%">harvesters.tif G: (16, 54), R: (14, 122)</td>
-    </tr>
-    <tr>
-        <td><img src="assets/icon.jpg" height="50%">icon.tif G: (16, 38), R: (20, 86)</td>
-        <td><img src="assets/lady.jpg" height="50%">lady.tif G: (8, 42), R: (8, 104)</td>
-        <td><img src="assets/melons.jpg" height="50%">melons.tif G: (8, 82), R: (12, 180)</td>
-    </tr>
-    <tr>
-        <td><img src="assets/onion_church.jpg" height="50%">onion_church.tif G: (26, 44), R: (36, 102)</td>
-        <td><img src="assets/sculpture.jpg" height="50%">sculpture.tif G: (-10, 32), R: (-26, 140)</td>
-        <td><img src="assets/self_portrait.jpg" height="50%">self_portrait.tif G: (26, 74), R: (36, 176)</td>
-    </tr>
-    <tr>
-        <td><img src="assets/three_generations.jpg" height="50%">three_generations.tif G: (14, 52), R: (12, 114)</td>
-        <td><img src="assets/train.jpg" height="50%">train.tif G: (0, 44), R: (24, 92)</td>
-        <td></td>
-    </tr>
-</table>
+| ![church](assets/church.jpg) | ![emir](assets/emir.jpg) | ![harvesters](assets/harvesters.jpg) |
+| church.tif <br> G: (0, 16), R: (-8, 52) | emir.tif <br> G: (22, 44), R: (-240, 96) | harvesters.tif <br> G: (16, 54), R: (14, 122) |
+| ![icon](assets/icon.jpg) | ![lady](assets/lady.jpg) | ![melons](assets/melons.jpg) |
+| icon.tif <br> G: (16, 38), R: (20, 86) | lady.tif <br> G: (8, 42), R: (8, 104) | melons.tif <br> G: (8, 82), R: (12, 180) |
+| ![onion church](assets/onion_church.jpg) | ![sculpture](assets/sculpture.jpg) | ![self portrait](assets/self_portrait.jpg) |
+| onion_church.tif <br> G: (26, 44), R: (36, 102) | sculpture.tif <br> G: (-10, 32), R: (-26, 140) | self_portrait.tif <br> G: (26, 74), R: (36, 176) |
+| ![three generations](assets/three_generations.jpg) | ![train](assets/train.jpg) | No more images! |
+| three_generations.tif <br> G: (14, 52), R: (12, 114) | train.tif <br> G: (0, 44), R: (24, 92) | N/A |
 
 ## Bells and Whistles (Extra Credit)
 
@@ -95,92 +85,38 @@ Specifically, I used:
 
 As you can see from the results below, the regular histogram equalization usually yielded a "brighter contrast" while the adaptive histogram equalization yielded a "darker contrast".
 
-<table markdown="0">
-    <tr>
-        <th>Before</th>
-        <th>After Histogram Equalization</th>
-        <th>After Contrast Limited Adaptive Histogram Equalization (CLAHE)</th>
-    <tr>
-    <tr>
-        <td><img src="assets/church.jpg" height="50%"></td>
-        <td><img src="assets/hist_equal_church.jpg" height="50%"></td>
-        <td><img src="assets/adapt_hist_church.jpg" height="50%"></td>
-    </tr>
-    <tr>
-        <td><img src="assets/icon.jpg" height="50%"></td>
-        <td><img src="assets/hist_equal_icon.jpg" height="50%"></td>
-        <td><img src="assets/adapt_hist_icon.jpg" height="50%"></td>
-    </tr>
-    <tr>
-        <td><img src="assets/sculpture.jpg" height="50%"></td>
-        <td><img src="assets/hist_equal_sculpture.jpg" height="50%"></td>
-        <td><img src="assets/adapt_hist_sculpture.jpg" height="50%"></td>
-    </tr>
-    <tr>
-        <td><img src="assets/self_portrait.jpg" height="50%"></td>
-        <td><img src="assets/hist_equal_self_portrait.jpg" height="50%"></td>
-        <td><img src="assets/adapt_hist_self_portrait.jpg" height="50%"></td>
-    </tr>
-</table>
+| Before | After Histogram Equalization | After Contrast Limited Adaptive Histogram Equalization (CLAHE) |
+| :--- | :--- | :--- |
+| ![church](assets/church.jpg) | ![church after histogram equalization](assets/hist_equal_church.jpg) | ![church after CLAHE](assets/adapt_hist_church.jpg) |
+| ![icon](assets/icon.jpg) | ![icon after histogram equalization](assets/hist_equal_icon.jpg) | ![icon after CLAHE](assets/adapt_hist_icon.jpg) |
+| ![sculpture](assets/sculpture.jpg) | ![sculpture after histogram equalization](assets/hist_equal_sculpture.jpg) | ![sculpture after CLAHE](assets/adapt_hist_sculpture.jpg) |
+| ![self portrait](assets/self_portrait.jpg) | ![self portrait after histogram equalization](assets/hist_equal_self_portrait.jpg) | ![self portrait after CLAHE](assets/adapt_hist_self_portrait.jpg) |
 
 ### Automatic color balancing (aka white balancing)
 
 The first color balancing method I used was **white patch**, where you assume that the brightest pixel (or the pixel in the Xth percentile of brightness) is white and rescale everything accordingly.
 
-<table>
-    <tr>
-        <th>Before</th>
-        <th>After</th>
-    <tr>
-    <tr>
-        <td><img src="assets/lady.jpg" height="50%"></td>
-        <td><img src="assets/white_patch_lady.jpg" height="50%"></td>
-    </tr>
-    <tr>
-        <td><img src="assets/onion_church.jpg" height="50%"></td>
-        <td><img src="assets/white_patch_onion_church.jpg" height="50%"></td>
-    </tr>
-    <tr>
-        <td><img src="assets/self_portrait.jpg" height="50%"></td>
-        <td><img src="assets/white_patch_self_portrait.jpg" height="50%"></td>
-    </tr>
-</table>
+| Before | After |
+| :--- | :--- |
+| ![lady before](assets/lady.jpg) | ![lady after](assets/white_patch_lady.jpg) |
+| ![onion church before](assets/onion_church.jpg) | ![onion church after](assets/white_patch_onion_church.jpg) |
+| ![self portrait before](assets/self_portrait.jpg) | ![self portrait after](assets/white_patch_self_portrait.jpg) |
 
 The second color balancing method I used was **gray world**, where you rescale the pixel values under the assumption that the average pixel value is gray. This resulted in a blueish tinge to images.
 
-<table>
-    <tr>
-        <th>Before</th>
-        <th>After</th>
-    <tr>
-    <tr>
-        <td><img src="assets/harvesters.jpg" height="50%"></td>
-        <td><img src="assets/gray_world_harvesters.jpg" height="50%"></td>
-    </tr>
-    <tr>
-        <td><img src="assets/melons.jpg" height="50%"></td>
-        <td><img src="assets/gray_world_melons.jpg" height="50%"></td>
-    </tr>
-    <tr>
-        <td><img src="assets/train.jpg" height="50%"></td>
-        <td><img src="assets/gray_world_train.jpg" height="50%"></td>
-    </tr>
-</table>
+| Before | After |
+| :--- | :--- |
+| ![harvesters before](assets/harvesters.jpg) | ![harvesters after](assets/gray_world_harvesters.jpg) |
+| ![melons before](assets/melons.jpg) | ![melons after](assets/gray_world_melons.jpg) |
+| ![train before](assets/train.jpg) | ![train after](assets/gray_world_train.jpg) |
 
 ### Better Features
 
 Noticeably, the `emir.tif` image did not get aligned properly using an image similarity metric of SSD. Switching the metric to maximizing **structural similarity** fixed the alignment. The best displacement was G: (24, 48), R: (46, 102).
 
-<table>
-    <tr>
-        <th>Before</th>
-        <th>After</th>
-    <tr>
-    <tr>
-        <td><img src="assets/emir.jpg" height="50%"></td>
-        <td><img src="assets/emir_structural_similarity.jpg" height="50%"></td>
-    </tr>
-</table>
+| Before | After |
+| :--- | :--- |
+| ![emir](assets/emir.jpg) | ![emir aligned using structural similarity](assets/emir_structural_similarity.jpg) |
 
 ## References
 

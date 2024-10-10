@@ -7,7 +7,7 @@
 
 Fun with Filters and Frequencies
 
-[Original project spec](https://inst.eecs.berkeley.edu/~cs180/fa24/hw/proj2/index.html)
+[Project Spec](https://inst.eecs.berkeley.edu/~cs180/fa24/hw/proj2/index.html)
 
 1. Table of Contents
 {:toc}
