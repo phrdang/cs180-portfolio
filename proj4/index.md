@@ -127,7 +127,40 @@ Note that the rectified worksheet top is not perfectly straight despite the hard
 
 ### Blend the images into a mosaic
 
-TODO
+To create an image mosaic (e.g. stitching together each pair of images of the Berkeley landscape), I can also do the same warping using homographies. Specifically, the approach is to:
+
+1. Determine correspondence points manually using the correspondence tool linked above
+2. Warp image 1 to image 2
+3. Zero pad warped image 1 and original image 2 so that their dimensions match
+4. Blend warped image 1 with original image 2
+
+I experimented with various blending methods. First, I tried a naive blending by taking the average of the padded images. This led to noticeable edges between warped image 1 and image 2:
+
+<div style="text-align: center;">
+<img src="assets/a/2/fire-trails/fire_combined.jpg" alt="fire trails blended using average blend" width="500">
+</div>
+
+Next I tried doing blending using a Laplacian stack with a "half half" alpha mask like in [Project 2](../proj2/index.md), where all the pixels on the left of the mask are 1 and all the pixels on the right of the mask are 0:
+
+<div style="text-align: center;">
+<img src="assets/a/2/half_half_mask.png" alt="half half alpha mask" width="500">
+</div>
+
+This was a significant improvement from the naive blending method, but there is a noticeable artifact at the top. You can also see a faint vertical line at the midpoint of the mosaic:
+
+<div style="text-align: center;">
+<img src="assets/a/2/fire-trails/fire_blended_half_half.png" alt="fire trails blended using half half alpha mask" width="500">
+</div>
+
+The best result was achieved with a mask using the [distance transform](https://en.wikipedia.org/wiki/Distance_transform) of each image using [cv2.distanceTransform](https://docs.opencv.org/3.4/d2/dbd/tutorial_distance_transform.html), and then finding locations where left distance transform is greater than the right distance transform (I called this `where_greater`). The final mask is made by `np.dstack`-ing `where_greater` for each of the 3 color channels (RGB). I also cropped the blended images to remove any unnecessary black pixels.
+
+| Left Image Distance Transform | Right Image Distance Transform | Distance Transform 1 > Distance Transform 2 | Blended |
+| :--- | :--- | :--- | :--- |
+| ![left fire trails image distance transform](assets/a/2/fire-trails/fire1_dist_transform.jpg) | ![right fire trails image distance transform](assets/a/2/fire-trails/fire2_dist_transform.jpg) | ![fire trails distance transform 1 greater than distance transform 2 visualization](assets/a/2/fire-trails/fire_where_greater.jpg) | ![blended fire trails](assets/a/2/fire-trails/fire_blended.jpg) |
+| ![left campus path image distance transform](assets/a/2/campus/campus1_dist_transform.jpg) | ![right campus path image distance transform](assets/a/2/campus/campus2_dist_transform.jpg) | ![campus path distance transform 1 greater than distance transform 2 visualization](assets/a/2/campus/campus_where_greater.jpg) | ![blended campus path](assets/a/2/campus/campus_blended.jpg) |
+| ![left doe library image distance transform](assets/a/2/doe-library/doe1_dist_transform.jpg) | ![right doe library image distance transform](assets/a/2/doe-library/doe2_dist_transform.jpg) | ![doe library distance transform 1 greater than distance transform 2 visualization](assets/a/2/doe-library/doe_where_greater.jpg) | ![blended doe library](assets/a/2/doe-library/doe_blended.jpg) |
+
+This entire mosaicing process can be further generalized to make a mosaic of multiple images from the same scenery to form a panorama. Instead of warping one image to another, we can warp all images to a center image. This will be left for the next part of the project!
 
 ## Project 4B
 
