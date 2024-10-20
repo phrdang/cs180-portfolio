@@ -24,7 +24,7 @@ For the image rectification, I chose to take a picture of a [Computer Science Me
 | :--- | :--- |
 | ![worksheet](assets/a/1/worksheet/worksheet.jpg) | ![art](assets/a/1/art/art.jpg) |
 
-For image mosaicing, I needed to take 3 sets of photos of the same scenery and the same center of projection (e.g. only the camera lens rotates, but the axis of rotation is the same). I chose to take pictures of a hike on the [Berkeley Fire Trails](https://maps.app.goo.gl/qPmW1P4tjoZkJzYS8), a [path on campus](https://maps.app.goo.gl/k5gq2NBvM3SLgfNg7) between Valley Life Sciences Building and Haviland Hall, and a view of Doe Library and the Memorial Glade going down [the North Gate path](https://maps.app.goo.gl/rxjzH346awgBhQjA7).
+For image mosaicing, I needed to take 3 sets of photos of the same scenery and the same center of projection (e.g. only the camera lens rotates, but the axis of rotation is the same). I chose to take pictures of a hike on the [Berkeley Fire Trails](https://maps.app.goo.gl/qPmW1P4tjoZkJzYS8), a [path on campus](https://maps.app.goo.gl/k5gq2NBvM3SLgfNg7) between Valley Life Sciences Building and Haviland Hall, and a view of Doe Library and the Memorial Glade going down [the North Gate path](https://maps.app.goo.gl/rxjzH346awgBhQjA7). I also rescaled these images by a factor of `0.3`.
 
 | Location | Left Image | Right Image |
 | :--- | :--- | :--- |
@@ -154,11 +154,17 @@ This was a significant improvement from the naive blending method, but there is 
 
 The best result was achieved with a mask using the [distance transform](https://en.wikipedia.org/wiki/Distance_transform) of each image using [cv2.distanceTransform](https://docs.opencv.org/3.4/d2/dbd/tutorial_distance_transform.html), and then finding locations where left distance transform is greater than the right distance transform (I called this `where_greater`). The final mask is made by `np.dstack`-ing `where_greater` for each of the 3 color channels (RGB). I also cropped the blended images to remove any unnecessary black pixels.
 
-| Left Image Distance Transform | Right Image Distance Transform | Distance Transform 1 > Distance Transform 2 | Blended |
+| Image | Left Image Distance Transform | Right Image Distance Transform | Distance Transform 1 > Distance Transform 2 |
 | :--- | :--- | :--- | :--- |
-| ![left fire trails image distance transform](assets/a/2/fire-trails/fire1_dist_transform.jpg) | ![right fire trails image distance transform](assets/a/2/fire-trails/fire2_dist_transform.jpg) | ![fire trails distance transform 1 greater than distance transform 2 visualization](assets/a/2/fire-trails/fire_where_greater.jpg) | ![blended fire trails](assets/a/2/fire-trails/fire_blended.jpg) |
-| ![left campus path image distance transform](assets/a/2/campus/campus1_dist_transform.jpg) | ![right campus path image distance transform](assets/a/2/campus/campus2_dist_transform.jpg) | ![campus path distance transform 1 greater than distance transform 2 visualization](assets/a/2/campus/campus_where_greater.jpg) | ![blended campus path](assets/a/2/campus/campus_blended.jpg) |
-| ![left doe library image distance transform](assets/a/2/doe-library/doe1_dist_transform.jpg) | ![right doe library image distance transform](assets/a/2/doe-library/doe2_dist_transform.jpg) | ![doe library distance transform 1 greater than distance transform 2 visualization](assets/a/2/doe-library/doe_where_greater.jpg) | ![blended doe library](assets/a/2/doe-library/doe_blended.jpg) |
+| Fire Trails | ![left fire trails image distance transform](assets/a/2/fire-trails/fire1_dist_transform.jpg) | ![right fire trails image distance transform](assets/a/2/fire-trails/fire2_dist_transform.jpg) | ![fire trails distance transform 1 greater than distance transform 2 visualization](assets/a/2/fire-trails/fire_where_greater.jpg) |
+| Campus Path | ![left campus path image distance transform](assets/a/2/campus/campus1_dist_transform.jpg) | ![right campus path image distance transform](assets/a/2/campus/campus2_dist_transform.jpg) | ![campus path distance transform 1 greater than distance transform 2 visualization](assets/a/2/campus/campus_where_greater.jpg) |
+| Doe Library | ![left doe library image distance transform](assets/a/2/doe-library/doe1_dist_transform.jpg) | ![right doe library image distance transform](assets/a/2/doe-library/doe2_dist_transform.jpg) | ![doe library distance transform 1 greater than distance transform 2 visualization](assets/a/2/doe-library/doe_where_greater.jpg) |
+
+Here are the final blended results:
+
+| Fire Trails | Campus Path | Doe Library |
+| :--- | :--- | :--- |
+| ![blended fire trails](assets/a/2/fire-trails/fire_blended.jpg) | ![blended campus path](assets/a/2/campus/campus_blended.jpg) | ![blended doe library](assets/a/2/doe-library/doe_blended.jpg) |
 
 This entire mosaicing process can be further generalized to make a mosaic of multiple images from the same scenery to form a panorama. Instead of warping one image to another, we can warp all images to a center image. This will be left for the next part of the project!
 
