@@ -40,53 +40,53 @@ Specifically, for each triangle in the triangulation:
 The structure of an affine transformation matrix is like so:
 
 $$
-\begin{pmatrix}
+\begin{bmatrix}
 a & b & c \\
 d & e & f \\
 0 & 0 & 1
-\end{pmatrix}
-\begin{pmatrix}
+\end{bmatrix}
+\begin{bmatrix}
 s_{x_i} \\
 s_{y_i} \\
 1
-\end{pmatrix}
+\end{bmatrix}
 =
-\begin{pmatrix}
+\begin{bmatrix}
 d_{x_i} \\
 d_{y_i} \\
 1
-\end{pmatrix}
+\end{bmatrix}
 $$
 
 where $$s_{x_i}, s_{y_i}$$ is the source $$(x, y)$$ pair and $$d_{x_i}, d_{y_i}$$ is the destination $$(x, y)$$ pair. If we are trying to warp a triangle's vertices, $$i$$ is between 1 and 3 (inclusive) since we have 3 coordinate pairs. (However this can be extended to any number of points we want to warp in the same way.)
 
 To find $$a, b, c, d, e, f$$, I used [`numpy.linalg.solve`](https://numpy.org/doc/2.0/reference/generated/numpy.linalg.solve.html) to solve this system of linear equations since we know $$s_x, s_y, d_x, d_y$$ for all $$i$$:
 
-$$\begin{pmatrix}
+$$\begin{bmatrix}
 s_{x_1} & s_{y_1} & 1 & 0 & 0 & 0 \\
 0 & 0 & 0 & s_{x_1} & s_{y_1} & 1 \\
 s_{x_2} & s_{y_2} & 1 & 0 & 0 & 0 \\
 0 & 0 & 0 & s_{x_2} & s_{y_2} & 1 \\
 s_{x_3} & s_{y_3} & 1 & 0 & 0 & 0 \\
 0 & 0 & 0 & s_{x_3} & s_{y_3} & 1
-\end{pmatrix}
-\begin{pmatrix}
+\end{bmatrix}
+\begin{bmatrix}
 a \\
 b \\
 c \\
 d \\
 e \\
 f
-\end{pmatrix}
+\end{bmatrix}
 =
-\begin{pmatrix}
+\begin{bmatrix}
 d_{x_1} \\
 d_{y_1} \\
 d_{x_2} \\
 d_{y_2} \\
 d_{x_3} \\
 d_{y_3}
-\end{pmatrix}
+\end{bmatrix}
 $$
 
 One challenge I faced while implementing this was realizing that "coordinates" for 2D numpy arrays are actually flipped. When indexing into a numpy array, doing `arr[a, b]` means getting row `a` and column `b`, which means in a typical $$(x, y)$$ coordinate system, the coordinate would be represented as $$(b, a)$$ rather than $$(a, b)$$.

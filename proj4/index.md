@@ -36,39 +36,39 @@ For image mosaicing, I needed to take 3 sets of photos of the same scenery and t
 
 A [homography](https://en.wikipedia.org/wiki/Homography) is a mapping between any 2 projective planes with the same center of projection. (See [lecture slides from Fall 2024](https://inst.eecs.berkeley.edu/~cs180/fa24/Lectures/mosaic.pdf#page=36).) We can use homographies to warp images and perform rectification and mosaicing.
 
-To compute a homography from a source point $$s_{x_i}, s_{y_i}, 1$$ to a destination point $$wd_{x_i}, wd_{y_i}, w$$, you need to compute the values in the $$3 \multiply 3$$ homography matrix $$H$$ (below). Also note that the source and destination points are using [homogeneous coordinates](https://en.wikipedia.org/wiki/Homogeneous_coordinates).
+To compute a homography from a source point $$(s_{x_i}, s_{y_i}, 1)$$ to a destination point $$(wd_{x_i}, wd_{y_i}, w)$$, you need to compute the values in the $$3 \times 3$$ homography matrix $$H$$ below. Also note that the source and destination points are [homogeneous coordinates](https://en.wikipedia.org/wiki/Homogeneous_coordinates).
 
 $$
-\begin{pmatrix}
+\begin{bmatrix}
 a & b & c \\
 d & e & f \\
 g & h & 1
-\end{pmatrix}
-\begin{pmatrix}
+\end{bmatrix}
+\begin{bmatrix}
 s_{x_i} \\
 s_{y_i} \\
 1
-\end{pmatrix}
+\end{bmatrix}
 =
-\begin{pmatrix}
+\begin{bmatrix}
 wd_{x_i} \\
 wd_{y_i} \\
 w
-\end{pmatrix}
+\end{bmatrix}
 $$
 
 Assuming you know $$H$$, you can apply it to every point $$i$$ in the source image.
 
 To find $$a$$ through $$h$$, you need to solve this system of linear equations since we know $$s_x, s_y, d_x, d_y$$ for a subset of $$i$$, the correspondence points, which are manually marked using the [correspondence tool from Project 3](https://cal-cs180.github.io/fa23/hw/proj3/tool.html).
 
-$$\begin{pmatrix}
+$$\begin{bmatrix}
 s_{x_1} & s_{y_1} & 1 & 0 & 0 & 0 & -s_{x_1} * d_{x_1} & -s_{y_1} * d_{x_1} \\
 0 & 0 & 0 & s_{x_1} & s_{y_1} & 1 & -s_{x_1} * d_{y_1} & -s_{y_1} * d_{y_1} \\
-\dots \\
+\dots & \dots & \dots & \dots & \dots & \dots & \dots & \dots \\
 s_{x_n} & s_{y_n} & 1 & 0 & 0 & 0 & -s_{x_n} * d_{x_n} & -s_{y_n} * d_{x_n} \\
 0 & 0 & 0 & s_{x_n} & s_{y_n} & 1 & -s_{x_n} * d_{y_n} & -s_{y_n} * d_{y_n}
-\end{pmatrix}
-\begin{pmatrix}
+\end{bmatrix}
+\begin{bmatrix}
 a \\
 b \\
 c \\
@@ -77,18 +77,18 @@ e \\
 f \\
 g \\
 h
-\end{pmatrix}
+\end{bmatrix}
 =
-\begin{pmatrix}
+\begin{bmatrix}
 d_{x_1} \\
 d_{y_1} \\
 \dots \\
 d_{x_n} \\
 d_{y_n}
-\end{pmatrix}
+\end{bmatrix}
 $$
 
-Note: $$n$$ is the total number of $$x, y$$ pairs in the source/destination image.
+Note: $$n$$ is the total number of homogeneous coordinate pairs in the source/destination image.
 
 As you can see, the system is overdetermined if $$n > 4$$. Because of this, we must use [least squares](https://numpy.org/doc/stable/reference/generated/numpy.linalg.lstsq.html) to find a "best fit" solution.
 
@@ -96,14 +96,17 @@ As you can see, the system is overdetermined if $$n > 4$$. Because of this, we m
 
 Now that we have a way to compute $$H$$, we can perform warping by writing a function `warp_image(img, H)`. Here is an overview of the warping algorithm:
 
-1. Compute $$H^-1$$
+1. Compute $$H^{-1}$$
 2. Determine the size of the warped image
-    1. Get the $$(x, y)$$ coordinates of the corners of the source image
-    2. Warp the source corners to get the destination corners by doing `H @ src_corners`
+    1. Get the $$(x, y, 1)$$ coordinates of the corners of the source image
+    2. Warp the source corners to get the destination corners by doing `H @ src_corners`, where `src_corners` is a $$3 \times 4$$ matrix (each column is a homogeneous coordinate representing a corner)
     3. Normalize the destination corners (e.g. divide $$(wx, wy)$$ by $$w$$)
     4. Get the min and max $$x$$ and $$y$$ coordinates to figure out the size of the warped image
-3. Determine all of the $$(x, y)$$ coordinates inside the warped image. Call this `dest_pts`
-4. Perform an inverse warp (like in [Project 3](../proj3/index.md)) by doing `H_inverse @ dest_pts`, normalizing like in step 2.3, and using [`scipy.ndimage.map_coordinates`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.map_coordinates.html#scipy.ndimage.map_coordinates) to interpolate color values.
+3. Determine all of the $$(x, y, 1)$$ coordinates inside the warped image. Call this $$3 \times n$$ matrix `dest_pts` (each column is a homogeneous coordinate).
+4. Perform an inverse warp (like in [Project 3](../proj3/index.md))
+    1. Do `H_inverse @ dest_pts`
+    2. Normalize the matrix product like in step 2.3
+    3. Use [`scipy.ndimage.map_coordinates`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.map_coordinates.html#scipy.ndimage.map_coordinates) to interpolate color values
 
 ### Image Rectification
 
@@ -114,7 +117,7 @@ To rectify the worksheet and art images, I marked their corners and then hardcod
 | ![worksheet source points](assets/a/1/worksheet/worksheet_pts.png) | ![worksheet destination points](assets/a/1/worksheet/worksheet_rectified_pts.png) |
 | ![art source points](assets/a/1/art/art_pts.png) | ![art destination points](assets/a/1/art/art_rectified_pts.png) |
 
-I then computed `H` for each source to destination pair of correspondence points, and performed the warping algorithm described in the previous section to rectify the images. I also cropped the resulting warped image to remove unnecessary black pixels created by performing the projective transformation.
+I then computed $$H_{\text{worksheet}}$$ and $$H_{\text{art}}$$, and performed the warping algorithm described in the previous section to rectify the images. I also cropped the resulting warped image to remove unnecessary black pixels created by performing the projective transformation.
 
 | Worksheet Rectified | Art Rectified |
 | :--- | :--- |
