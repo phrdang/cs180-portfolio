@@ -6,3 +6,4 @@ Rebecca Dang's portfolio of projects from [CS 180: Intro to Computer Vision and 
 - [Project 2: Fun with Filters and Frequencies](/proj2/index.md)
 - [Project 3: Face Morphing](/proj3/index.md)
 - [Project 4: \[Auto\]Stitching Photo Mosaics](/proj4/index.md)
+- [Project 5: Fun With Diffusion Models!](/proj5/index.md)
