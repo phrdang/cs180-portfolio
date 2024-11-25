@@ -15,10 +15,14 @@
 
 # Project 5
 
+Fun With Diffusion Models! - [Project Spec](https://inst.eecs.berkeley.edu/~cs180/fa24/hw/proj5/index.html)
+
 1. Table of Contents
 {:toc}
 
 ## Project 5A: The Power of Diffusion Models!
+
+[Part A Project Spec](https://inst.eecs.berkeley.edu/~cs180/fa24/hw/proj5/parta.html)
 
 ### Part 0: Setup
 
@@ -267,16 +271,182 @@ where $$f_{\text{lowpass}}$$ is a low pass filter and $$f_{\text{highpass}}$$ is
 
 ## Project 5B: Diffusion Models from Scratch!
 
-In construction
+[Part B Project Spec](https://inst.eecs.berkeley.edu/~cs180/fa24/hw/proj5/partb.html)
 
-### Part 1: Training a Single-Step Denoising U-Net
+In this part of the project, I wrote a stable diffusion model from scratch trained on the [MNIST dataset](https://pytorch.org/vision/main/generated/torchvision.datasets.MNIST.html).
 
-In construction
+### Part 1: Training a Single-Step Denoising UNet
+
+#### 1.1: Implementing the UNet
+
+Given a noisy image $$z$$, I trained a denoiser $$D_\theta$$ that maps $$z$$ to a clean image $$x$$ by optimizing L2 loss:
+
+$$
+L = \mathbb{E}_{z, x}||D_\theta(z) - x ||^2
+$$
+
+I did this by implementing a UNet, from this [paper](https://arxiv.org/abs/1505.04597): U-Net: Convolutional Networks for Biomedical Image Segmentation by Olaf Ronneberger, Philipp Fischer, and Thomas Brox.
+
+#### 1.2 Using the UNet to Train a Denoiser
+
+To begin, I visualized how an image can become more and more noisy by implementing a function `add_noise` which takes a clean image `x` and adds Gaussian noise:
+
+$$
+z = x + \sigma \epsilon
+$$
+
+where $$\sigma = [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]$$, $$\epsilon \sim \mathcal{N}(0, I)$$, and normalized $$x \in [0, 1)$$.
+
+<div style="text-align: center">
+<img src="assets/b/1/2/digits_with_noise.png" alt="varying levels of noise with noise">
+</div>
+
+##### 1.2.1: Training
+
+Next, I began training my unconditioned UNet to be able to denoise an image in 1 step by training on pairs of clean and noisy images where $$\sigma = 0.5$$. I used the following hyperparameters, as suggested on the spec:
+
+- Batch size: 256
+- Epochs: 5
+- Hidden dimension `D`: 128
+- Optimizer: [Adam](https://pytorch.org/docs/stable/generated/torch.optim.Adam.html)
+- Learning rate: `1e-4`
+
+Here is my training loss graph:
+
+<div style="text-align: center">
+<img src="assets/b/1/2/training_loss.png" alt="unconditioned unet training loss graph">
+</div>
+
+Here are the results of the denoiser at epoch 1 and epoch 5:
+
+<div style="text-align: center">
+<img src="assets/b/1/2/epoch1.png" alt="results after epoch 1">
+</div>
+
+<div style="text-align: center">
+<img src="assets/b/1/2/epoch5.png" alt="results after epoch 5">
+</div>
+
+##### 1.2.2: Out-of-Distribution Testing
+
+To see if the denoiser can generalize to other levels of noise, I kept the image the same and varied $$\sigma$$. The denoised images can be seen below, and are not bad but also not great (this is to be fixed later in the project).
+
+<div style="text-align: center">
+<img src="assets/b/1/2/testing.png" alt="out of distribution testing results">
+</div>
 
 ### Part 2: Training a DDPM Denoising U-Net
 
-In construction
+In this part, I implemented DDPM from this [paper](https://arxiv.org/abs/2006.11239), Denoising Diffusion Probabilistic Models by Jonathan Ho, Ajay Jain, and Pieter Abbeel.
+
+Instead of estimating the denoised image, we can train a UNet to estimate the noise that was added to the image. This changes the loss function we're trying to minimize accordingly:
+
+$$
+L = \mathbb{E}_{z, x}||\epsilon_\theta(z) - \epsilon||^2
+$$
+
+where $$\epsilon_\theta$$ is a UNet trained to predict noise. Additionally, to produce better results we do iterative denoising instead of one-step denoising. Like in Part A of the project, we use the following formula to compute iteratively noisier images in the forward pass:
+
+$$
+x_t = \sqrt{\bar{\alpha_t}} x_0 + \sqrt{1 - \bar{\alpha_t}} \epsilon
+$$
+
+where:
+
+- $$x_t$$ is the image at time step $$t$$ ($$x_0$$ is the original image)
+- $$\bar{\alpha_t}$$ is a noise coefficient computed accordingly:
+    - $$\beta_t$$ is a list of numbers of length $$T = 300$$ such that $$\beta_0 = 0.0001$$ and $$\beta_T = 0.02$$ and all other elements are evenly spaced between the two
+    - $$\alpha_t = 1 - \beta_t$$
+    - $$\bar{\alpha_t} = \Pi_{s = 1}^{t} \alpha_s$$
+- $$\epsilon \sim \mathcal{N}(0, 1)$$ is Gaussian noise
+
+#### 2.1: Adding Time Conditioning to UNet
+
+We can add time conditioning to the UNet by modifying the loss function again:
+
+$$
+L = \mathbb{E}_{z, x}||\epsilon_\theta(x_t, t) - \epsilon||^2
+$$
+
+and adding an `FCBlock` to the unconditioned UNet made up of some `nn.Linear` and `nn.GELU` elements (see the project spec for more details).
+
+#### 2.2: Training the UNet
+
+I implemented this algorithm:
+
+![algorithm 1](assets/b/2/2/algorithm1.png)
+
+to perform the forward pass of the UNet. I trained the network with the following hyperparameters, as suggested:
+
+- Batch size: 128
+- Epochs: 20
+- Hidden dimension `D`: 64
+- Optimizer: [Adam](https://pytorch.org/docs/stable/generated/torch.optim.Adam.html)
+- Learning rate: `1e-3`
+- Learning rate decay scheduler: [ExponentialLR](https://pytorch.org/docs/stable/generated/torch.optim.lr_scheduler.ExponentialLR.html) with `gamma = 0.1 ** (1.0 / num_epochs)`
+
+Below is my training loss curve:
+
+<div style="text-align: center">
+<img src="assets/b/2/2/training_loss.png" alt="training loss curve">
+</div>
+
+#### 2.3: Sampling from the UNet
+
+I then implemented this algorithm:
+
+![algorithm 2](assets/b/2/3/algorithm2.png)
+
+to generate/sample 10 digits from the UNet at epoch = 5:
+
+<div style="text-align: center">
+<img src="assets/b/2/3/epoch5.png" alt="epoch 5 sampling results">
+</div>
+
+and at epoch 20:
+
+<div style="text-align: center">
+<img src="assets/b/2/3/epoch20.png" alt="epoch 20 sampling results">
+</div>
+
+One thing I had to be very careful about was setting the seed to generate the starting $$x_t$$ (I used the current epoch index) and setting the seed to generate $$z$$ (I used the current $$t$$ value).
+
+#### 2.4: Adding Class-Conditioning to UNet
+
+To be able to generate a particular digit (rather than any digit), I implemented class conditioning by adding 2 more `FCBlock`s in a similar way as before (see the spec for details). Additionally, I dropped out (e.g. turned that image's one-hot-encoded vector to all zeros in the batch) the class label for 10% of images in the batch. I also used Classifier-Free Guidance to estimate noise from both the unconditioned and conditioned UNet.
+
+I implemented this algorithm:
+
+![algorithm 3](assets/b/2/4/algorithm3.png)
+
+And had this training loss curve with the same hyperparameters as before:
+
+<div style="text-align: center">
+<img src="assets/b/2/4/training_loss.png" alt="training loss curve">
+</div>
+
+#### 2.5: Sampling from the Class-Conditioned UNet
+
+I then implemented this algorithm:
+
+![algorithm 4](assets/b/2/5/algorithm4.png)
+
+to generate/sample digits 0-9 in that order at epoch 5:
+
+<div style="text-align: center">
+<img src="assets/b/2/5/epoch5.png" alt="epoch 5 sampling results">
+</div>
+
+and at epoch 20:
+
+<div style="text-align: center">
+<img src="assets/b/2/5/epoch20.png" alt="epoch 20 sampling results">
+</div>
+
+Once again, I had to be very careful about was setting the seed to generate the starting $$x_t$$ (I used `epoch + j` where `epoch` is the epoch index and `j` is an index from `[0, 3]` since we have to sample digits 0-9 at least 4 times) and setting the seed to generate $$z$$ (I used the current $$t$$ value).
 
 ### Part 3: Bells & Whistles
 
-In construction
+#### Sampling Gifs
+
+TODO
