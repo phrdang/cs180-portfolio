@@ -3,7 +3,15 @@
   src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
 </script>
 
-<!-- TODO upscale output images -->
+<style>
+.rotate180 {
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+</style>
 
 # Project 5
 
@@ -139,6 +147,7 @@ Below are the results of taking 3 original images, adding varying levels of nois
 In addition to the given test image of the Campanile, I chose an image of the [Golden Gate Bridge](assets/a/1/7/0/golden-gate/golden-gate-bridge.jpg) and the [Eiffel Tower](assets/a/1/7/0/eiffel/eiffel.jpg) that were resized to $$64 \times 64$$.
 
 | `i_start = 1` | `i_start = 3` | `i_start = 5` | `i_start = 7` | `i_start = 10` | `i_start = 20` | Original |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | ![denoised campanile with i_start = 1](assets/a/1/7/0/campanile/sample1.png) | ![denoised campanile with i_start = 3](assets/a/1/7/0/campanile/sample3.png) | ![denoised campanile with i_start = 5](assets/a/1/7/0/campanile/sample5.png) | ![denoised campanile with i_start = 7](assets/a/1/7/0/campanile/sample7.png) | ![denoised campanile with i_start = 10](assets/a/1/7/0/campanile/sample10.png) | ![denoised campanile with i_start = 20](assets/a/1/7/0/campanile/sample20.png) | ![original campanile image](assets/a/1/1/campanile.png) |
 | ![denoised golden gate bridge with i_start = 1](assets/a/1/7/0/golden-gate/golden-gate-bridge1.png) | ![denoised golden gate bridge with i_start = 3](assets/a/1/7/0/golden-gate/golden-gate-bridge3.png) | ![denoised golden gate gate bridge with i_start = 5](assets/a/1/7/0/golden-gate/golden-gate-bridge5.png) | ![denoised golden gate bridge with i_start = 7](assets/a/1/7/0/golden-gate/golden-gate-bridge7.png) | ![denoised golden gate bridge with i_start = 10](assets/a/1/7/0/golden-gate/golden-gate-bridge10.png) | ![denoised golden gate bridge with i_start = 20](assets/a/1/7/0/golden-gate/golden-gate-bridge20.png) | ![original golden gate bridge image](assets/a/1/7/0/golden-gate/golden-gate-bridge-resized.png) |
 | ![denoised Eiffel Tower with i_start = 1](assets/a/1/7/0/eiffel/eiffel1.png) | ![denoised Eiffel Tower with i_start = 3](assets/a/1/7/0/eiffel/eiffel3.png) | ![denoised Eiffel Tower with i_start = 5](assets/a/1/7/0/eiffel/eiffel5.png) | ![denoised Eiffel Tower with i_start = 7](assets/a/1/7/0/eiffel/eiffel7.png) | ![denoised Eiffel Tower with i_start = 10](assets/a/1/7/0/eiffel/eiffel10.png) | ![denoised Eiffel Tower with i_start = 20](assets/a/1/7/0/eiffel/eiffel20.png) | ![original Eiffel Tower image](assets/a/1/7/0/eiffel/eiffel-resized.png) |
@@ -147,27 +156,114 @@ See also: [SDEdit algorithm](https://sde-image-editing.github.io/) by Meng et al
 
 ##### 1.7.1 Editing Hand-Drawn and Web Images
 
-In construction
+In this subpart, I drew 2 images and found 1 image from the web and utilized the diffusion model to edit the images using the same method as above.
+
+| `i_start = 1` | `i_start = 3` | `i_start = 5` | `i_start = 7` | `i_start = 10` | `i_start = 20` | Original |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| ![drawn tree 1](assets/a/1/7/1/drawn-tree/drawn-tree1.png) | ![drawn tree 3](assets/a/1/7/1/drawn-tree/drawn-tree3.png) | ![drawn tree 5](assets/a/1/7/1/drawn-tree/drawn-tree5.png) | ![drawn tree 7](assets/a/1/7/1/drawn-tree/drawn-tree7.png) | ![drawn tree 10](assets/a/1/7/1/drawn-tree/drawn-tree10.png) | ![drawn tree 20](assets/a/1/7/1/drawn-tree/drawn-tree20.png) | ![drawn tree original](assets/a/1/7/1/drawn-tree/drawn-tree.png) |
+| ![drawn tulip 1](assets/a/1/7/1/tulip/tulip1.png) | ![drawn tulip 3](assets/a/1/7/1/tulip/tulip3.png) | ![drawn tulip 5](assets/a/1/7/1/tulip/tulip5.png) | ![drawn tulip 7](assets/a/1/7/1/tulip/tulip7.png) | ![drawn tulip 1](assets/a/1/7/1/tulip/tulip10.png) | ![drawn tulip 20](assets/a/1/7/1/tulip/tulip20.png) |![drawn tulip original](assets/a/1/7/1/tulip/tulip.png) |
+| ![tree 1](assets/a/1/7/1/tree/tree1.png) | ![tree 3](assets/a/1/7/1/tree/tree3.png) | ![tree 5](assets/a/1/7/1/tree/tree5.png) | ![tree 7](assets/a/1/7/1/tree/tree7.png) | ![tree 10](assets/a/1/7/1/tree/tree10.png) | ![tree 20](assets/a/1/7/1/tree/tree20.png) | ![tree original](assets/a/1/7/1/tree/tree.png) |
+
 
 ##### 1.7.2 Inpainting
 
-In construction
+Next I implemented the inpainting part of this [paper](https://arxiv.org/abs/2201.09865), RePaint: Inpainting using Denoising Diffusion Probabilistic Models by Andreas Lugmayr, Martin Danelljan, Andres Romero, Fisher Yu, Radu Timofte, and Luc Van Gool. (Using this [paper](http://graphics.cs.cmu.edu/projects/scene-completion/), Scene Completion Using Millions of Photographs by James Hays and Alexei Efros, for inspiration on how to "complete" the scene.)
+
+Given an image, $$x_{orig}$$, and binary mask $$m$$, I created a new image with the same content as the original where $$m = 0$$, but new content where $$m = 1$$. To do this, we run the diffusion denoising loop and only keep the part where the mask is 1:
+
+$$
+x_t \leftarrow m x_t + (1 - m) \text{forward}(x_{orig}, t)
+$$
+
+| Campanile with new top | Cat with dog head | Oski with dog head |
+| :--- | :--- | :--- |
+| ![inpainted campanile](assets/a/1/7/2/campanile.png) | ![inpainted cat](assets/a/1/7/2/cat-inpainted.png) | ![inpainted oski](assets/a/1/7/2/oski.png) |
 
 ##### 1.7.3 Text-Conditional Image-to-image Translation
 
-In construction
+In this part, I changed the text prompt from `"a high quality image"` to `"a rocket ship"`, obtaining the results below with different levels of noise for the Campanile image and some images from the web.
+
+| `i_start = 1` | `i_start = 3` | `i_start = 5` | `i_start = 7` | `i_start = 10` | `i_start = 20` | Original |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| ![campanile 1](assets/a/1/7/3/campanile/sample1.png) | ![campanile 3](assets/a/1/7/3/campanile/sample3.png) | ![campanile 5](assets/a/1/7/3/campanile/sample5.png) | ![campanile 1](assets/a/1/7/3/campanile/sample7.png) | ![campanile 10](assets/a/1/7/3/campanile/sample10.png) | ![campanile 20](assets/a/1/7/3/campanile/sample20.png) | ![campanile original](assets/a/1/1/campanile.png) |
+| ![guitar 1](assets/a/1/7/3/guitar/sample1.png) | ![guitar 3](assets/a/1/7/3/guitar/sample3.png) | ![guitar 5](assets/a/1/7/3/guitar/sample5.png) | ![guitar 7](assets/a/1/7/3/guitar/sample7.png) | ![guitar 10](assets/a/1/7/3/guitar/sample10.png) | ![guitar 20](assets/a/1/7/3/guitar/sample20.png) | ![guitar original](assets/a/1/7/3/guitar/guitar.png) |
+| ![waterfall 1](assets/a/1/7/3/waterfall/sample1.png) | ![waterfall 3](assets/a/1/7/3/waterfall/sample3.png) | ![waterfall 5](assets/a/1/7/3/waterfall/sample5.png) | ![waterfall 7](assets/a/1/7/3/waterfall/sample7.png) | ![waterfall 10](assets/a/1/7/3/waterfall/sample10.png) | ![waterfall 20](assets/a/1/7/3/waterfall/sample20.png) | ![waterfall 1](assets/a/1/7/3/waterfall/waterfall.png) |
+
 
 #### 1.8 Visual Anagrams
 
-In construction
+In this part, I implemented Visual Anagrams from [this paper](https://dangeng.github.io/visual_anagrams/), Visual Anagrams: Generating Multi-View Optical Illusions with Diffusion Models by Daniel Geng, Inbum Park, and Andrew Owens. To do this, we denoise like before but we alternate between 2 different text prompts and flip the image upside-down. That way, the final image right-side up looks like the first prompt, and upside-down looks like the second prompt.
+
+The full algorithm is as follows:
+
+$$
+\epsilon_1 = \text{UNet}(x_t, t, p_1)
+$$
+
+$$
+\epsilon_2 = \text{flip}(\text{UNet}(\text{flip}(x_t), t, p_2))
+$$
+
+$$
+\epsilon = (\epsilon_1 + \epsilon_2) / 2
+$$
+
+where `flip` is a function that flips the image and `p_i` are the 2 text prompts. Our final noise estimate is $$\epsilon$$, which is the average of the 2 individual noise estimates.
+
+<table>
+    <tr>
+        <th>Prompt 1</th>
+        <th>Image</th>
+        <th>Prompt 2</th>
+        <th>Flipped Image</th>
+    </tr>
+    <tr>
+        <td>an oil painting of an old man</td>
+        <td><img src="assets/a/1/8/campfire_man.png"></td>
+        <td>an oil painting of people around a campfire</td>
+        <td><img src="assets/a/1/8/campfire_man.png" class="rotate180"></td>
+    </tr>
+    <tr>
+        <td>an oil painting of a snowy mountain village</td>
+        <td><img src="assets/a/1/8/mountain_coast.png"></td>
+        <td>a photo of the amalfi cost*</td>
+        <td><img src="assets/a/1/8/mountain_coast.png" class="rotate180"></td>
+    </tr>
+    <tr>
+        <td>a lithograph of waterfalls</td>
+        <td><img src="assets/a/1/8/waterfall_skull.png"></td>
+        <td>a lithograph of a skull</td>
+        <td><img src="assets/a/1/8/waterfall_skull.png" class="rotate180"></td>
+    </tr>
+</table>
+
+\*This should say "coast" but that's how the text embeddings were loaded in the starter code provided by staff :)
 
 #### 1.9 Hybrid Images
 
-In construction
+In this part, I implemented this [paper](https://arxiv.org/abs/2404.11615), Factorized Diffusion: Perceptual Illusions by Noise Decomposition by Daniel Geng, Inbum Park, and Andrew Owens. Specifically, I used the diffusion model to create hybrid images like in [Project 2](/proj2/#part-22-hybrid-images).
 
-### Part 2: Bells & Whistles
+Similar to the visual anagrams, we just have to adjust our noise estimate as follows:
 
-In construction
+$$
+\epsilon_1 = \text{UNet}(x_t, t, p_1)
+$$
+
+$$
+\epsilon_2 = \text{UNet}(x_t, t, p_2)
+$$
+
+$$
+\epsilon = f_{\text{lowpass}}(\epsilon_1) + f_{\text{highpass}}(\epsilon_2)
+$$
+
+where $$f_{\text{lowpass}}$$ is a low pass filter and $$f_{\text{highpass}}$$ is a high pass filter. I used the suggested Gaussian blur of kernel size 33 and $$\sigma = 2$$.
+
+| Prompt 1 | Prompt 2 | Hybrid Image |
+| :--- | :--- | :--- |
+| a lithograph of waterfalls | a lithograph of a skull | ![man in hat waterfall](assets/a/1/9/waterfall_skull.png) |
+| an oil painting of people around a campfire | a lithograph of a skull | ![campfire skull](assets/a/1/9/campfire_skull.png) |
+| a man wearing a hat | a lithograph of waterfalls | ![man in hat waterfall](assets/a/1/9/man_in_hat_waterfall.png) |
 
 ## Project 5B: Diffusion Models from Scratch!
 
