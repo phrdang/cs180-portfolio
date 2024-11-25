@@ -480,4 +480,29 @@ I created gifs of the sampling process from `t = 299` to `t = 0` for the time co
 
 I did the same for the class conditioned UNet:
 
-TODO
+<table>
+    <tr>
+        <td><img src="assets/b/bw/class_cond_epoch4_gifs/class_cond_epoch4_frame0.gif"></td>
+        <td><img src="assets/b/bw/class_cond_epoch4_gifs/class_cond_epoch4_frame1.gif"></td>
+        <td><img src="assets/b/bw/class_cond_epoch4_gifs/class_cond_epoch4_frame2.gif"></td>
+        <td><img src="assets/b/bw/class_cond_epoch4_gifs/class_cond_epoch4_frame3.gif"></td>
+        <td><img src="assets/b/bw/class_cond_epoch4_gifs/class_cond_epoch4_frame4.gif"></td>
+        <td><img src="assets/b/bw/class_cond_epoch4_gifs/class_cond_epoch4_frame5.gif"></td>
+        <td><img src="assets/b/bw/class_cond_epoch4_gifs/class_cond_epoch4_frame6.gif"></td>
+        <td><img src="assets/b/bw/class_cond_epoch4_gifs/class_cond_epoch4_frame7.gif"></td>
+        <td><img src="assets/b/bw/class_cond_epoch4_gifs/class_cond_epoch4_frame8.gif"></td>
+        <td><img src="assets/b/bw/class_cond_epoch4_gifs/class_cond_epoch4_frame9.gif"></td>
+    </tr>
+    <tr>
+        <td><img src="assets/b/bw/class_cond_epoch19_gifs/class_cond_epoch19_frame0.gif"></td>
+        <td><img src="assets/b/bw/class_cond_epoch19_gifs/class_cond_epoch19_frame1.gif"></td>
+        <td><img src="assets/b/bw/class_cond_epoch19_gifs/class_cond_epoch19_frame2.gif"></td>
+        <td><img src="assets/b/bw/class_cond_epoch19_gifs/class_cond_epoch19_frame3.gif"></td>
+        <td><img src="assets/b/bw/class_cond_epoch19_gifs/class_cond_epoch19_frame4.gif"></td>
+        <td><img src="assets/b/bw/class_cond_epoch19_gifs/class_cond_epoch19_frame5.gif"></td>
+        <td><img src="assets/b/bw/class_cond_epoch19_gifs/class_cond_epoch19_frame6.gif"></td>
+        <td><img src="assets/b/bw/class_cond_epoch19_gifs/class_cond_epoch19_frame7.gif"></td>
+        <td><img src="assets/b/bw/class_cond_epoch19_gifs/class_cond_epoch19_frame8.gif"></td>
+        <td><img src="assets/b/bw/class_cond_epoch19_gifs/class_cond_epoch19_frame9.gif"></td>
+    </tr>
+</table>
