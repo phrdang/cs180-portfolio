@@ -355,7 +355,7 @@ where:
 
 - $$x_t$$ is the image at time step $$t$$ ($$x_0$$ is the original image)
 - $$\bar{\alpha_t}$$ is a noise coefficient computed accordingly:
-    - $$\beta_t$$ is a list of numbers of length $$T = 300$$ such that $$\beta_0 = 0.0001$$ and $$\beta_T = 0.02$$ and all other elements are evenly spaced between the two
+    - $$\beta_t$$ is a list of numbers of length 300 (`t = 299` to `t = 0`) such that $$\beta_0 = 0.0001$$ and $$\beta_T = 0.02$$ and all other elements are evenly spaced between the two
     - $$\alpha_t = 1 - \beta_t$$
     - $$\bar{\alpha_t} = \Pi_{s = 1}^{t} \alpha_s$$
 - $$\epsilon \sim \mathcal{N}(0, 1)$$ is Gaussian noise
@@ -448,5 +448,36 @@ Once again, I had to be very careful about was setting the seed to generate the 
 ### Part 3: Bells & Whistles
 
 #### Sampling Gifs
+
+I created gifs of the sampling process from `t = 299` to `t = 0` for the time conditioned UNet at epoch 5 (first row) and epoch 20 (second row):
+
+<table>
+    <tr>
+        <td><img src="assets/b/bw/time_cond_epoch4_gifs/time_cond_epoch4_frame0.gif"></td>
+        <td><img src="assets/b/bw/time_cond_epoch4_gifs/time_cond_epoch4_frame1.gif"></td>
+        <td><img src="assets/b/bw/time_cond_epoch4_gifs/time_cond_epoch4_frame2.gif"></td>
+        <td><img src="assets/b/bw/time_cond_epoch4_gifs/time_cond_epoch4_frame3.gif"></td>
+        <td><img src="assets/b/bw/time_cond_epoch4_gifs/time_cond_epoch4_frame4.gif"></td>
+        <td><img src="assets/b/bw/time_cond_epoch4_gifs/time_cond_epoch4_frame5.gif"></td>
+        <td><img src="assets/b/bw/time_cond_epoch4_gifs/time_cond_epoch4_frame6.gif"></td>
+        <td><img src="assets/b/bw/time_cond_epoch4_gifs/time_cond_epoch4_frame7.gif"></td>
+        <td><img src="assets/b/bw/time_cond_epoch4_gifs/time_cond_epoch4_frame8.gif"></td>
+        <td><img src="assets/b/bw/time_cond_epoch4_gifs/time_cond_epoch4_frame9.gif"></td>
+    </tr>
+    <tr>
+        <td><img src="assets/b/bw/time_cond_epoch19_gifs/time_cond_epoch19_frame0.gif"></td>
+        <td><img src="assets/b/bw/time_cond_epoch19_gifs/time_cond_epoch19_frame1.gif"></td>
+        <td><img src="assets/b/bw/time_cond_epoch19_gifs/time_cond_epoch19_frame2.gif"></td>
+        <td><img src="assets/b/bw/time_cond_epoch19_gifs/time_cond_epoch19_frame3.gif"></td>
+        <td><img src="assets/b/bw/time_cond_epoch19_gifs/time_cond_epoch19_frame4.gif"></td>
+        <td><img src="assets/b/bw/time_cond_epoch19_gifs/time_cond_epoch19_frame5.gif"></td>
+        <td><img src="assets/b/bw/time_cond_epoch19_gifs/time_cond_epoch19_frame6.gif"></td>
+        <td><img src="assets/b/bw/time_cond_epoch19_gifs/time_cond_epoch19_frame7.gif"></td>
+        <td><img src="assets/b/bw/time_cond_epoch19_gifs/time_cond_epoch19_frame8.gif"></td>
+        <td><img src="assets/b/bw/time_cond_epoch19_gifs/time_cond_epoch19_frame9.gif"></td>
+    </tr>
+</table>
+
+I did the same for the class conditioned UNet:
 
 TODO
