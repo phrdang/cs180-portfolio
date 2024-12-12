@@ -7,3 +7,4 @@ Rebecca Dang's portfolio of projects from [CS 180: Intro to Computer Vision and 
 - [Project 3: Face Morphing](/proj3/index.md)
 - [Project 4: \[Auto\]Stitching Photo Mosaics](/proj4/index.md)
 - [Project 5: Fun With Diffusion Models!](/proj5/index.md)
+- [Final Project: Gradient Domain Fusion, High Dynamic Range, Light Field Camera (with Elana Ho)](https://phrdang.github.io/cs180-final-proj-website/)
